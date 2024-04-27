@@ -1,10 +1,11 @@
 import 'package:fyp/core/error/exceptions.dart';
+import 'package:fyp/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataource {
-  Future<String> signUpWithEmailPassword(
+  Future<UserModel> signUpWithEmailPassword(
       {required String name, required String email, required String password});
-  Future<String> signInWithEmailPassword(
+  Future<UserModel> signInWithEmailPassword(
       {required String email, required String password});
 }
 
@@ -13,7 +14,7 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
 
   AuthRemoteDataourceImplementation(this.supabaseclient);
   @override
-  Future<String> signInWithEmailPassword({
+  Future<UserModel> signInWithEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -28,7 +29,7 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
   }
 
   @override
-  Future<String> signUpWithEmailPassword({
+  Future<UserModel> signUpWithEmailPassword({
     required String name,
     required String email,
     required String password,
@@ -38,7 +39,7 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
           .signUp(email: email, password: password, data: {'name': name});
       if (response.user == null) throw ServerException('user is null');
 
-      return response.user!.id;
+      return UserModel.fromJson(response.user!.toJson()) ;
     } catch (e) {
       throw ServerException(e.toString());
     }

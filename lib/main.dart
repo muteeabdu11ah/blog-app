@@ -16,13 +16,7 @@ void main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (_) => AuthBloc(
-          usersignup: UserSignUp(
-            AuthRepositoryiterface(
-              AuthRemoteDataourceImplementation(supabase.client),
-            ),
-          ),
-        ),
+        create: (_) => servicelocator<AuthBloc>(),
       ),
     ],
     child: MainApp(),
