@@ -19,13 +19,17 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
     required String password,
   }) async {
     try {
-      final signInresponse = supabaseclient.auth.signInWithPassword(
+      final signInresponse = await supabaseclient.auth.signInWithPassword(
         email: email,
         password: password,
       );
-    //S if(signInresponse. == null)
-    } catch (e) {}
-    throw UnimplementedError();
+    if(signInresponse.user == null){
+      throw  ServerException('user is null');
+    }
+    return UserModel.fromJson(signInresponse.user!.toJson()) ;
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
   }
 
   @override

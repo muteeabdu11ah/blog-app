@@ -2,6 +2,7 @@ import 'package:fyp/core/secrets/app_secrets.dart';
 import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart';
 import 'package:fyp/features/auth/data/repositories/auth_repository_implementation.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
+import 'package:fyp/features/auth/domain/usecases/user_log_in.dart';
 import 'package:fyp/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -33,9 +34,13 @@ void _initAuth() {
     () => UserSignUp(servicelocator()),
   );
 
+servicelocator.registerFactory(
+    () => UserSignIn(servicelocator()),
+  );
+
   servicelocator.registerLazySingleton(
     () => AuthBloc(
-      usersignup: servicelocator(),
+      usersignup: servicelocator(), userlogin: servicelocator(),
     ),
   );
 }

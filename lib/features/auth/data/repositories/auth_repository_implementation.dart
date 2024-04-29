@@ -4,16 +4,26 @@ import 'package:fyp/core/error/failure.dart';
 import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart';
 import 'package:fyp/features/auth/domain/entities/user.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepositoryiterface implements AuthRepository {
   final AuthRemoteDataource remoteDataSource;
 
   AuthRepositoryiterface(this.remoteDataSource);
   @override
-  Future<Either<Failure, UserData>> logInwithEmailPassword(
-      {required String email, required String password}) async {
-    // TODO: implement logInwithEmailPassword
-    throw UnimplementedError();
+  Future<Either<Failure, UserData>> logInwithEmailPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final user = await remoteDataSource.signInWithEmailPassword(
+          email: email, password: password);
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    } on AuthException catch (e) {
+      return left(Failure(e.message));
+    }
   }
 
   @override
@@ -30,6 +40,8 @@ class AuthRepositoryiterface implements AuthRepository {
 
       return right(user);
     } on ServerException catch (e) {
+      return left(Failure(e.message));
+    } on AuthException catch (e) {
       return left(Failure(e.message));
     }
   }
