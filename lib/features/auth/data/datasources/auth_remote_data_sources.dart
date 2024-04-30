@@ -3,16 +3,26 @@ import 'package:fyp/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataource {
+    Session? get curretUserSession;
   Future<UserModel> signUpWithEmailPassword(
       {required String name, required String email, required String password});
   Future<UserModel> signInWithEmailPassword(
       {required String email, required String password});
+
+  Future<UserModel?> getCurrentUserData();
 }
 
 class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
   final SupabaseClient supabaseclient;
-
   AuthRemoteDataourceImplementation(this.supabaseclient);
+
+
+  @override
+  // TODO: implement curretUserSession
+  Session? get curretUserSession => supabaseclient.auth.currentSession;
+
+
+
   @override
   Future<UserModel> signInWithEmailPassword({
     required String email,
@@ -32,6 +42,8 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
     }
   }
 
+
+
   @override
   Future<UserModel> signUpWithEmailPassword({
     required String name,
@@ -48,4 +60,24 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
       throw ServerException(e.toString());
     }
   }
+  
+  @override
+  Future<UserModel?> getCurrentUserData() async {
+   try {
+
+    if (curretUserSession != null) {
+         final userData = await  supabaseclient.from('profiles').select().eq('id', curretUserSession!.user.id);
+ return UserModel.fromJson(userData.first).copyWith(
+  email: curretUserSession!.user.email,
+ );
+    }
+    else {
+      return null;
+    }
+   } catch (e) {
+     throw ServerException(e.toString());
+   }
+  }
+  
+  
 }

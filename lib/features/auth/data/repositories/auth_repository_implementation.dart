@@ -45,4 +45,17 @@ class AuthRepositoryiterface implements AuthRepository {
       return left(Failure(e.message));
     }
   }
+  
+  @override
+  Future<Either<Failure, UserData>> currentUser() async {
+    try {
+      final user = await remoteDataSource.getCurrentUserData();
+      if (user == null){
+        return left(Failure('user not Found'));
+      }
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }
