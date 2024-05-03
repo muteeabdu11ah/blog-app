@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:fyp/core/error/failure.dart';
-import 'package:fyp/features/auth/domain/entities/user.dart';
+import 'package:fyp/core/common/entities/user.dart';
 
 abstract interface class AuthRepository{
  Future<Either<Failure,UserData>> signUpwithEmailPassword(
