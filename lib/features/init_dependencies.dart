@@ -10,6 +10,7 @@ import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/blog/data/datasources/blog_remote_datasource.dart';
 import 'package:fyp/features/blog/data/repositories/blog_repository_impl.dart';
 import 'package:fyp/features/blog/domain/repositories/blog_repository.dart';
+import 'package:fyp/features/blog/domain/usecase/get_all_blogs.dart';
 import 'package:fyp/features/blog/domain/usecase/upload_blog.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -39,8 +40,12 @@ void _initBlog() {
     ..registerFactory(() => UploadBlog(
           servicelocator(),
         ))
-    ..registerLazySingleton(() => BlogBloc(
+    ..registerFactory(() => getAllBlogs(
           servicelocator(),
+        ))
+    ..registerLazySingleton(() => BlogBloc(
+          uploadBlog: servicelocator(),
+          get_all_blogs: servicelocator(),
         ));
 }
 

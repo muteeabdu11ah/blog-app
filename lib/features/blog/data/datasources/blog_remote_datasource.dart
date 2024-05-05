@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:fyp/core/error/exceptions.dart';
 import 'package:fyp/features/blog/data/model/blog_model.dart';
-import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class BlogRemoteDataSource{
@@ -11,6 +10,8 @@ abstract interface class BlogRemoteDataSource{
     required File image,
     required BlogModel blog,
   });
+
+  Future<List<BlogModel>> getAllBlogs();
 
 }
 
@@ -39,6 +40,17 @@ return BlogModel.fromJson(blogdata.first);
    } catch (e) {
      throw ServerException(e.toString());
    }
+  }
+  
+  @override
+  Future<List<BlogModel>> getAllBlogs() async {
+ try {
+  final blogs = await supabaseclient.from('blogs').select('*,profiles (name)');
+ return blogs.map((blogs) => BlogModel.fromJson(blogs).copyWith(
+  userName: blogs['profiles']['name'] )).toList();
+ } catch (e) {
+   throw ServerException(e.toString());
+ }
   }
   
 }

@@ -3,7 +3,7 @@ import 'package:fyp/features/auth/data/models/user_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class AuthRemoteDataource {
-    Session? get curretUserSession;
+  Session? get curretUserSession;
   Future<UserModel> signUpWithEmailPassword(
       {required String name, required String email, required String password});
   Future<UserModel> signInWithEmailPassword(
@@ -16,12 +16,9 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
   final SupabaseClient supabaseclient;
   AuthRemoteDataourceImplementation(this.supabaseclient);
 
-
   @override
   // TODO: implement curretUserSession
   Session? get curretUserSession => supabaseclient.auth.currentSession;
-
-
 
   @override
   Future<UserModel> signInWithEmailPassword({
@@ -33,16 +30,14 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
         email: email,
         password: password,
       );
-    if(signInresponse.user == null){
-      throw  ServerException('user is null');
-    }
-    return UserModel.fromJson(signInresponse.user!.toJson()) ;
+      if (signInresponse.user == null) {
+        throw ServerException('user is null');
+      }
+      return UserModel.fromJson(signInresponse.user!.toJson());
     } catch (e) {
       throw ServerException(e.toString());
     }
   }
-
-
 
   @override
   Future<UserModel> signUpWithEmailPassword({
@@ -55,29 +50,29 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
           .signUp(email: email, password: password, data: {'name': name});
       if (response.user == null) throw ServerException('user is null');
 
-      return UserModel.fromJson(response.user!.toJson()) ;
+      return UserModel.fromJson(response.user!.toJson());
     } catch (e) {
       throw ServerException(e.toString());
     }
   }
-  
+
   @override
   Future<UserModel?> getCurrentUserData() async {
-   try {
-
-    if (curretUserSession != null) {
-         final userData = await  supabaseclient.from('profiles').select().eq('id', curretUserSession!.user.id);
- return UserModel.fromJson(userData.first).copyWith(
-  email: curretUserSession!.user.email,
- );
+    try {
+      if (curretUserSession != null) {
+        final userData = await supabaseclient
+            .from('profiles')
+            .select()
+            .eq('id', curretUserSession!.user.id);
+        return UserModel.fromJson(userData.first).copyWith(
+          email: curretUserSession!.user.email,
+          
+        );
+      } else {
+        return null;
+      }
+    } catch (e) {
+      throw ServerException(e.toString());
     }
-    else {
-      return null;
-    }
-   } catch (e) {
-     throw ServerException(e.toString());
-   }
   }
-  
-  
 }

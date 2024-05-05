@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
-import 'package:fyp/features/blog/presentation/pages/add_new_blog_page.dart';
+import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
 import 'package:fyp/features/init_dependencies.dart';
 import 'package:get/get.dart';
@@ -18,6 +18,9 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => servicelocator<AuthBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => servicelocator<BlogBloc>(),
       ),
     ],
     child: MainApp(),
@@ -49,9 +52,10 @@ class _MainAppState extends State<MainApp> {
           },
           builder: (context, isLoggedIn) {
             if (isLoggedIn) {
-              return SignInPage();
-            } else
-              return AddNewBlogPage();
+              return const BlogPage();
+            } else {
+              return  SignInPage();
+            }
           },
         ));
   }

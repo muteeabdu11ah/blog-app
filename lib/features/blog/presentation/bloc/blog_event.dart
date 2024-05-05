@@ -15,3 +15,5 @@ final class BlogUploadevent extends BlogEvent{
 
  
 }
+
+final class bloggetallblogsevent extends BlogEvent{}

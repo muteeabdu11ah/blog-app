@@ -7,13 +7,12 @@ class Blog {
   final String title;
   final String content;
   final String imageURL;
-  final String userName;
+  final String? userName;
   final List<String> topics;
   final DateTime updatedAt;
 
   Blog( 
-      {
-        required this.userName,
+      {this.userName, 
         required this.id,
       required this.posterId,
       required this.title,
