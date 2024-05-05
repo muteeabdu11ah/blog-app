@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
+import 'package:fyp/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
 import 'package:fyp/features/init_dependencies.dart';
 import 'package:get/get.dart';
@@ -50,7 +51,7 @@ class _MainAppState extends State<MainApp> {
             if (isLoggedIn) {
               return SignInPage();
             } else
-              return BlogPage();
+              return AddNewBlogPage();
           },
         ));
   }
