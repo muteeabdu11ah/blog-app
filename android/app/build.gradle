@@ -23,6 +23,12 @@ if (flutterVersionName == null) {
 }
 
 android {
+
+    aaptOptions {
+        noCompress 'tflite'
+        noCompress 'lite'
+    }
+    
     namespace "com.example.fyp"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
