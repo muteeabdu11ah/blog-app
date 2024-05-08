@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:fpdart/src/either.dart';
 import 'package:fyp/core/error/exceptions.dart';
 import 'package:fyp/core/error/failure.dart';
 import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart';
 import 'package:fyp/core/common/entities/user.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
+import 'package:fyp/features/auth/domain/usecases/current_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepositoryiterface implements AuthRepository {
@@ -53,6 +56,17 @@ class AuthRepositoryiterface implements AuthRepository {
       if (user == null){
         return left(Failure('user not Found'));
       }
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> logOut() async {
+    try {
+      final user = await remoteDataSource.logOutUsser();
+
       return right(user);
     } on ServerException catch (e) {
       return left(Failure(e.message));

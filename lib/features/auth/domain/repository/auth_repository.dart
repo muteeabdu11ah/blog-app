@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:fyp/core/error/failure.dart';
 import 'package:fyp/core/common/entities/user.dart';
 
 abstract interface class AuthRepository{
+
+  Future<Either<Failure,void>> logOut();
  Future<Either<Failure,UserData>> signUpwithEmailPassword(
     {
       required String name,

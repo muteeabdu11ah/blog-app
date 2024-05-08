@@ -181,9 +181,10 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                     ),
                                     label: Text(e),
                                     color: !selectedTopics.contains(e)
-                                        ? null
+                                        ? MaterialStatePropertyAll(
+                                            Color.fromARGB(202, 74, 25, 0))
                                         : MaterialStatePropertyAll(
-                                            Color.fromARGB(255, 101, 213, 138)),
+                                            Color.fromARGB(255, 130, 64, 30)),
                                   ),
                                 ),
                               ),

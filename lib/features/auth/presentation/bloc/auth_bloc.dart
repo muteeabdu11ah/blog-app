@@ -10,6 +10,8 @@ import 'package:fyp/features/auth/domain/usecases/user_log_in.dart';
 import 'package:fyp/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:meta/meta.dart';
 
+import '../../domain/usecases/user_log_out.dart';
+
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -18,12 +20,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignIn _userLogIn;
   final CurrentUser _currentUser;
   final AppUserCubit _appUserCubit;
+  final UserLogOut _logOut;
   AuthBloc({
+    required UserLogOut logOut,
     required AppUserCubit appUserCubit,
     required CurrentUser currentuser,
     required UserSignIn userlogin,
     required UserSignUp usersignup,
-  })  : _appUserCubit = appUserCubit,
+  })  : 
+  _logOut = logOut,
+  _appUserCubit = appUserCubit,
         _userSignUp = usersignup,
         _userLogIn = userlogin,
         _currentUser = currentuser,
@@ -32,8 +38,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignup>(_onAuthSignUp);
     on<AuthLogIn>(_onAuthLogIn);
     on<AuthIsUserLoggedIn>(_AuthIsUserLoggedIn);
+    on<AuthUserLogOut>(_UserLogOut);
   }
+void _UserLogOut(
+  AuthUserLogOut event, Emitter<AuthState> emit
+)async{
+  await _logOut(NoParams());
+ final res = await _currentUser(NoParams());
+    res.fold((l) {
+      print('email');
 
+      emit(AuthFailure(l.message));
+    }, (r) {
+      _emitAuthSucess(r, emit);
+    });
+} 
   void _onAuthSignUp(AuthSignup event, Emitter<AuthState> emit) async {
     final res = await _userSignUp(UserSignUpParams(
         name: event.name, email: event.email, password: event.password));

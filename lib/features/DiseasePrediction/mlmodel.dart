@@ -6,22 +6,24 @@ import 'package:image_picker/image_picker.dart';
 
 import 'dart:developer' as devtools;
 
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class AlzhimerDetectionPage extends StatefulWidget {
+  static route() => MaterialPageRoute(
+        builder: (context) => const AlzhimerDetectionPage(),
+      );
+  const AlzhimerDetectionPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AlzhimerDetectionPage> createState() => _AlzhimerDetectionPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AlzhimerDetectionPageState extends State<AlzhimerDetectionPage> {
   File? filePath;
   String label = '';
   double confidence = 0.0;
 
   Future<void> _tfLteInit() async {
     String? res = await Tflite.loadModel(
-        model: "flutter_assets/assets/model_unquant.tflite",
+        model: "flutter_assets/assets/animal.tflite",
         labels: "flutter_assets/assets/labels.txt",
         numThreads: 1, // defaults to 1
         isAsset:
@@ -48,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         path: image.path, // required
         imageMean: 0.0, // defaults to 117.0
         imageStd: 255.0, // defaults to 1.0
-        numResults: 2, // defaults to 5
+        numResults: 4, // defaults to 5
         threshold: 0.2, // defaults to 0.1
         asynch: true // defaults to true
         );
@@ -81,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         path: image.path, // required
         imageMean: 0.0, // defaults to 117.0
         imageStd: 255.0, // defaults to 1.0
-        numResults: 2, // defaults to 5
+        numResults: 4, // defaults to 5
         threshold: 0.2, // defaults to 0.1
         asynch: true // defaults to true
         );
@@ -114,9 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Mango Dresses Detection"),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -142,7 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(12),
                             image: const DecorationImage(
-                              image: AssetImage('assets/upload.jpg'),
+                              image: AssetImage(
+                                  'flutter_assets/assets/non_demented.jpg'),
                             ),
                           ),
                           child: filePath == null

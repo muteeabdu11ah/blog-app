@@ -50,7 +50,7 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        theme: ThemeData(useMaterial3: true),
+        theme: ThemeData(colorScheme: ColorScheme.dark(), useMaterial3: true),
         debugShowCheckedModeBanner: false,
         home: BlocSelector<AppUserCubit, AppUserState, bool>(
           selector: (state) {
@@ -58,7 +58,9 @@ class _MainAppState extends State<MainApp> {
           },
           builder: (context, isLoggedIn) {
             if (isLoggedIn) {
-              return MyHomePage();
+              return
+                  // Scaffold();
+                  BlogPage();
             } else {
               return SignInPage();
             }

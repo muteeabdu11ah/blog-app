@@ -23,10 +23,9 @@ dependencies:
   image: ^3.2.0
   meta: ^1.11.0
   supabase_flutter: ^2.3.4
-  tflite_flutter: ^0.10.4
   uuid: ^4.4.0
-  tflite_v2: ^1.0.0
   flutter_tflite: ^1.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -36,5 +35,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-assets:
-    - flutter_assets/asstes/
+  assets:
+    - flutter_assets/assets/
