@@ -16,7 +16,8 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
   BlogBloc({
     required UploadBlog uploadBlog,
     required getAllBlogs get_all_blogs,
-  })  : _getallblogs = get_all_blogs,
+  })  : 
+        _getallblogs = get_all_blogs,
         _uploadBlog = uploadBlog,
         super(BlogInitial()) {
     on<BlogEvent>((event, emit) {
@@ -29,6 +30,7 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
 
   void _fetchBlocs(bloggetallblogsevent event, Emitter<BlogState> state) async {
     final res = await _getallblogs(NoParams());
+
     res.fold((l) => emit(BlogFailure(error: l.message)),
         (r) => emit(BlogDisplaySucess(r)));
   }
@@ -45,4 +47,6 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
     res.fold((l) => emit(BlogFailure(error: l.message)),
         (r) => emit(BlogUploadSucess()));
   }
+
+  
 }

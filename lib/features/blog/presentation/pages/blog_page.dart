@@ -6,6 +6,7 @@ import 'package:fyp/features/DiseasePrediction/mlmodel.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
+import 'package:fyp/features/blog/presentation/bloc/user_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:fyp/features/blog/presentation/widgets/blog_card.dart';
 
@@ -23,7 +24,9 @@ class _BlogPageState extends State<BlogPage> {
   @override
   void initState() {
     super.initState();
+
     context.read<BlogBloc>().add(bloggetallblogsevent());
+    context.read<UserBloc>().add(UserGetUsername());
   }
 
   @override
@@ -37,14 +40,46 @@ class _BlogPageState extends State<BlogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text('Hi'),
-                SizedBox(
+                BlocConsumer<UserBloc, UserState>(
+                  listener: (context, state) {
+                    if (state is UserFailure) {
+                      showSnackBar(context, state.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is UserInitial) {
+                      return const Loader();
+                    }
+                    if (state is UserNameFetchSucess) {
+                      return Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Center(
+                            child: Text(
+                          'Hi, ${state.UserName}',
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )),
+                      );
+                    }
+                    return const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Center(child: Text('Not Found')),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Divider(),
+                const SizedBox(
                   height: 30,
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushAndRemoveUntil(context,
-                        AlzhimerDetectionPage.route(), (route) => false);
+                    Navigator.push(
+                      context,
+                      AlzhimerDetectionPage.route(),
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -58,14 +93,20 @@ class _BlogPageState extends State<BlogPage> {
                                 2.0, 2.0), // shadow direction: bottom right
                           ),
                         ],
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(5)),
                     child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            width: 10,
+                          ),
                           Icon(
                             Icons.generating_tokens,
                             size: 40,
                             color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
                           ),
                           Text(
                             'Alzhimer Detection',
@@ -77,7 +118,7 @@ class _BlogPageState extends State<BlogPage> {
                         ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 InkWell(
@@ -98,14 +139,20 @@ class _BlogPageState extends State<BlogPage> {
                                 2.0, 2.0), // shadow direction: bottom right
                           ),
                         ],
-                        borderRadius: BorderRadius.circular(10)),
+                        borderRadius: BorderRadius.circular(5)),
                     child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            width: 10,
+                          ),
                           Icon(
                             Icons.logout_sharp,
                             size: 40,
                             color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 10,
                           ),
                           Text(
                             'LogOut',

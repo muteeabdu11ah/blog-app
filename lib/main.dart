@@ -4,6 +4,7 @@ import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
+import 'package:fyp/features/blog/presentation/bloc/user_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
 import 'package:fyp/features/blog/presentation/pages/view_blog_page.dart';
 import 'package:fyp/features/init_dependencies.dart';
@@ -22,6 +23,9 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => servicelocator<BlogBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => servicelocator<UserBloc>(),
       ),
     ],
     child: MainApp(),

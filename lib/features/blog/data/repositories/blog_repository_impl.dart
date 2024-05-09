@@ -44,5 +44,16 @@ return left(Failure(e.message));
       return left(Failure(e.message));
     }
   }
+  
+  @override
+  Future<Either<Failure, String>> getUserName()async {
+    try {
+      final name = await blogRemoteDataSource.getUserNameByUid();
+      return right(name!);
+    } on ServerException catch (e) {
+            return left(Failure(e.message));
+
+    }
+  }
 
 }
