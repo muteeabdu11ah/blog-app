@@ -10,21 +10,20 @@ class BlogEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (value){
-if (value!.trim().isEmpty){
-return '$hintText is missing';
-}
-return null;
+      validator: (value) {
+        if (value!.trim().isEmpty) {
+          return '$hintText is missing';
+        }
+        return null;
       },
       controller: textcontroller,
       decoration: InputDecoration(
         hintText: hintText,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(
-            width: 2,
-            color: Color.fromARGB(255, 9, 148, 20), // Initial border color
-          ),
+          borderSide:
+              BorderSide(width: 2, color: Colors.blue // Initial border color
+                  ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -33,7 +32,7 @@ return null;
           ),
         ),
       ),
-      cursorColor: Colors.black, 
+      cursorColor: Colors.black,
       maxLines: null,
     );
   }

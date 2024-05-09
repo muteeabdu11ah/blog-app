@@ -27,24 +27,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required CurrentUser currentuser,
     required UserSignIn userlogin,
     required UserSignUp usersignup,
-  })  : 
-  _logOut = logOut,
-  _appUserCubit = appUserCubit,
+  })  : _logOut = logOut,
+        _appUserCubit = appUserCubit,
         _userSignUp = usersignup,
         _userLogIn = userlogin,
         _currentUser = currentuser,
         super(AuthInitial()) {
-          on<AuthEvent>((_, emit) => emit(AuthLoading()),);
+    on<AuthEvent>(
+      (_, emit) => emit(AuthLoading()),
+    );
     on<AuthSignup>(_onAuthSignUp);
     on<AuthLogIn>(_onAuthLogIn);
     on<AuthIsUserLoggedIn>(_AuthIsUserLoggedIn);
     on<AuthUserLogOut>(_UserLogOut);
   }
-void _UserLogOut(
-  AuthUserLogOut event, Emitter<AuthState> emit
-)async{
-  await _logOut(NoParams());
- final res = await _currentUser(NoParams());
+  void _UserLogOut(AuthUserLogOut event, Emitter<AuthState> emit) async {
+    await _logOut(NoParams());
+    final res = await _currentUser(NoParams());
     res.fold((l) {
       print('email');
 
@@ -52,7 +51,8 @@ void _UserLogOut(
     }, (r) {
       _emitAuthSucess(r, emit);
     });
-} 
+  }
+
   void _onAuthSignUp(AuthSignup event, Emitter<AuthState> emit) async {
     final res = await _userSignUp(UserSignUpParams(
         name: event.name, email: event.email, password: event.password));
@@ -70,13 +70,12 @@ void _UserLogOut(
   }
 
   void _AuthIsUserLoggedIn(
-    
       AuthIsUserLoggedIn event, Emitter<AuthState> emit) async {
-            emit(AuthLoading());
+    emit(AuthLoading());
 
     final res = await _currentUser(NoParams());
     res.fold((l) {
-      print('email');
+      print('email1');
 
       emit(AuthFailure(l.message));
     }, (r) {
@@ -85,6 +84,7 @@ void _UserLogOut(
   }
 
   void _emitAuthSucess(UserData user, Emitter<AuthState> emit) {
+    print('jere');
     _appUserCubit.updateUser(user);
     emit(AuthSucess(user));
   }

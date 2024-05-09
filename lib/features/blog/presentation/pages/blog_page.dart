@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/core/common/widgets/loader.dart';
 import 'package:fyp/core/utils/show_snackbar.dart';
 import 'package:fyp/features/DiseasePrediction/mlmodel.dart';
-import 'package:fyp/features/auth/domain/usecases/user_log_in.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
-import 'package:fyp/features/auth/presentation/pages/signup_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/add_new_blog_page.dart';
 import 'package:fyp/features/blog/presentation/widgets/blog_card.dart';
-import 'package:get/get.dart';
 
 class BlogPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -40,9 +35,12 @@ class _BlogPageState extends State<BlogPage> {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text('Hi'),
+                SizedBox(
+                  height: 30,
+                ),
                 InkWell(
                   onTap: () {
                     Navigator.pushAndRemoveUntil(context,
@@ -50,10 +48,10 @@ class _BlogPageState extends State<BlogPage> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.blue,
                         boxShadow: const [
                           BoxShadow(
-                            color: Color.fromARGB(255, 220, 112, 112),
+                            color: Color.fromARGB(255, 59, 59, 59),
                             blurRadius: 2.0,
                             spreadRadius: 0.0,
                             offset: Offset(
@@ -67,14 +65,20 @@ class _BlogPageState extends State<BlogPage> {
                           Icon(
                             Icons.generating_tokens,
                             size: 40,
+                            color: Colors.white,
                           ),
                           Text(
                             'Alzhimer Detection',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ]),
                   ),
+                ),
+                SizedBox(
+                  height: 30,
                 ),
                 InkWell(
                   onTap: () {
@@ -84,10 +88,10 @@ class _BlogPageState extends State<BlogPage> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.black,
+                        color: Colors.blue,
                         boxShadow: const [
                           BoxShadow(
-                            color: Color.fromARGB(255, 220, 112, 112),
+                            color: Color.fromARGB(255, 49, 49, 49),
                             blurRadius: 2.0,
                             spreadRadius: 0.0,
                             offset: Offset(
@@ -101,11 +105,14 @@ class _BlogPageState extends State<BlogPage> {
                           Icon(
                             Icons.logout_sharp,
                             size: 40,
+                            color: Colors.white,
                           ),
                           Text(
                             'LogOut',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ]),
                   ),

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:fpdart/src/either.dart';
 import 'package:fyp/core/error/exceptions.dart';
@@ -6,7 +5,6 @@ import 'package:fyp/core/error/failure.dart';
 import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart';
 import 'package:fyp/core/common/entities/user.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
-import 'package:fyp/features/auth/domain/usecases/current_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepositoryiterface implements AuthRepository {

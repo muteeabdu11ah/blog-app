@@ -67,7 +67,8 @@ void _initAuth() {
     )
     ..registerFactory(
       () => UserSignIn(servicelocator()),
-    )..registerFactory(() => UserLogOut(servicelocator()))
+    )
+    ..registerFactory(() => UserLogOut(servicelocator()))
     ..registerFactory(() => CurrentUser(servicelocator()))
     ..registerLazySingleton(
       () => AuthBloc(

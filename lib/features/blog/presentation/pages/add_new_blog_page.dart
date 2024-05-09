@@ -12,7 +12,6 @@ import 'package:fyp/core/utils/show_snackbar.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
 import 'package:fyp/features/blog/presentation/widgets/blog_editor_widget.dart';
-import 'package:get/get.dart';
 
 class AddNewBlogPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -179,12 +178,19 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                           ? const Color.fromARGB(0, 0, 0, 0)
                                           : Colors.black12,
                                     ),
-                                    label: Text(e),
+                                    label: Text(
+                                      e,
+                                      style: TextStyle(
+                                        color: selectedTopics.contains(e)
+                                            ? Color.fromARGB(255, 255, 255, 255)
+                                            : const Color.fromARGB(
+                                                255, 56, 56, 56),
+                                      ),
+                                    ),
                                     color: !selectedTopics.contains(e)
                                         ? MaterialStatePropertyAll(
-                                            Color.fromARGB(202, 74, 25, 0))
-                                        : MaterialStatePropertyAll(
-                                            Color.fromARGB(255, 130, 64, 30)),
+                                            Color.fromARGB(200, 211, 218, 220))
+                                        : MaterialStatePropertyAll(Colors.blue),
                                   ),
                                 ),
                               ),

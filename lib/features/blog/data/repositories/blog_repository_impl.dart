@@ -7,7 +7,6 @@ import 'package:fyp/core/error/failure.dart';
 import 'package:fyp/features/blog/data/datasources/blog_remote_datasource.dart';
 import 'package:fyp/features/blog/data/model/blog_model.dart';
 import 'package:fyp/features/blog/domain/repositories/blog_repository.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class BlogRepositoryImpl implements BlogRepository {
