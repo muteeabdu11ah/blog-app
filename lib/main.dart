@@ -6,7 +6,6 @@ import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:fyp/features/blog/presentation/bloc/user_bloc.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
-import 'package:fyp/features/blog/presentation/pages/view_blog_page.dart';
 import 'package:fyp/features/init_dependencies.dart';
 
 void main() async {

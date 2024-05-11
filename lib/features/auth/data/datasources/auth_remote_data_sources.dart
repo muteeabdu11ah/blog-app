@@ -12,6 +12,10 @@ abstract interface class AuthRemoteDataource {
   Future<UserModel?> getCurrentUserData();
 
   Future<void> logOutUsser();
+
+  Future<void> forgotPasswordUser({
+    required String email
+  });
 }
 
 class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
@@ -87,4 +91,14 @@ class AuthRemoteDataourceImplementation implements AuthRemoteDataource {
 
     }
   }
+  
+  @override
+  Future<void> forgotPasswordUser({required String email}) async {
+    try {
+    await  supabaseclient.auth.resetPasswordForEmail(email);
+    } catch (e) {
+            throw ServerException(e.toString());
+
+    }
+}
 }

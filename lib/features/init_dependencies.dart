@@ -4,6 +4,7 @@ import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart
 import 'package:fyp/features/auth/data/repositories/auth_repository_implementation.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
 import 'package:fyp/features/auth/domain/usecases/current_user.dart';
+import 'package:fyp/features/auth/domain/usecases/user_forgot_password.dart';
 import 'package:fyp/features/auth/domain/usecases/user_log_in.dart';
 import 'package:fyp/features/auth/domain/usecases/user_log_out.dart';
 import 'package:fyp/features/auth/domain/usecases/user_sign_up.dart';
@@ -35,7 +36,7 @@ Future<void> initdependencies() async {
 
 void _initUser() {
   servicelocator
-  ..registerFactory(() => GetUserNameByUid(servicelocator()))
+    ..registerFactory(() => GetUserNameByUid(servicelocator()))
     ..registerLazySingleton(() => UserBloc(
           nameByUid: servicelocator(),
         ));
@@ -81,13 +82,15 @@ void _initAuth() {
     )
     ..registerFactory(() => UserLogOut(servicelocator()))
     ..registerFactory(() => CurrentUser(servicelocator()))
+    ..registerFactory(() => UserForgotPassword(servicelocator()))
     ..registerLazySingleton(
       () => AuthBloc(
         usersignup: servicelocator(),
         userlogin: servicelocator(),
         currentuser: servicelocator(),
-        appUserCubit: servicelocator(), 
+        appUserCubit: servicelocator(),
         logOut: servicelocator(),
+        forgotPassword: servicelocator(),
       ),
     );
 }

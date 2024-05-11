@@ -2,12 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/core/common/widgets/loader.dart';
 import 'package:fyp/core/common/widgets/text_from_widget.dart';
 import 'package:fyp/core/utils/show_snackbar.dart';
-import 'package:fyp/features/auth/domain/usecases/user_sign_up.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:fyp/features/auth/presentation/pages/forgot_passwor_page.dart';
 import 'package:fyp/features/auth/presentation/pages/signup_page.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
 
@@ -47,20 +46,14 @@ class _SignInPageState extends State<SignInPage> {
           return SafeArea(
             child: SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                    // gradient: LinearGradient(
-                    //   begin: Alignment.centerLeft,
-                    //   end: Alignment.centerRight,
-                    //   colors: [Color(0xff662D8C), Color(0xffED1E79)],
-                    // ),
-                    ),
+                decoration: const BoxDecoration(),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           height: MediaQuery.of(context).size.height * 0.35,
                           child: Image.asset(
                             'flutter_assets/assets/MEDWISE.png',
@@ -70,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        Row(
+                    const    Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -90,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        Row(
+                     const   Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -110,17 +103,28 @@ class _SignInPageState extends State<SignInPage> {
                           isPass: true,
                         ),
                         const SizedBox(
-                          height: 50,
+                          height: 40,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context, ForgotPasswordPage.route());
+                              },
+                              child: const Text(
+                                'Forgot password?',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         InkWell(
                           child: Container(
-                            child: const Text(
-                              'Log in',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
                             width: double.infinity,
                             alignment: Alignment.center,
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -130,6 +134,13 @@ class _SignInPageState extends State<SignInPage> {
                                     BorderRadius.all(Radius.circular(4)),
                               ),
                               color: Colors.blue,
+                            ),
+                            child: const Text(
+                              'Log in',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                           onTap: () {
@@ -144,7 +155,7 @@ class _SignInPageState extends State<SignInPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        Text(
+                   const     Text(
                           'or',
                           style: TextStyle(fontSize: 20),
                         ),
@@ -161,12 +172,8 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                           ),
                           child: TextButton(
-                              style: ButtonStyle(
-                                  // side: MaterialStateProperty.all<BorderSide>(
-                                  //   BorderSide(
-                                  //       color: Colors.blue), // Blue border color
-                                  // ),
-                                  ),
+                              
+                                  
                               onPressed: () {
                                 Navigator.push(context, SignUpPage.route());
                               },

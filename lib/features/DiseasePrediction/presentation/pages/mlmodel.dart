@@ -2,12 +2,9 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tflite/flutter_tflite.dart';
 import 'package:fyp/core/common/widgets/reponsive.dart';
 import 'package:fyp/features/blog/presentation/pages/blog_page.dart';
-import 'package:image_picker/image_picker.dart';
 
-import 'dart:developer' as devtools;
 
 class AlzhimerDetectionPage extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -24,97 +21,10 @@ class _AlzhimerDetectionPageState extends State<AlzhimerDetectionPage> {
   String label = '';
   double confidence = 0.0;
 
-  Future<void> _tfLteInit() async {
-    String? res = await Tflite.loadModel(
-        model: "flutter_assets/assets/animal.tflite",
-        labels: "flutter_assets/assets/labels.txt",
-        numThreads: 1, // defaults to 1
-        isAsset:
-            true, // defaults to true, set to false to load resources outside assets
-        useGpuDelegate:
-            false // defaults to false, set to true to use GPU delegate
-        );
-  }
+ 
+ 
 
-  pickImageGallery() async {
-    final ImagePicker picker = ImagePicker();
-// Pick an image.
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image == null) return;
-
-    var imageMap = File(image.path);
-
-    setState(() {
-      filePath = imageMap;
-    });
-
-    var recognitions = await Tflite.runModelOnImage(
-        path: image.path, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 4, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
-        asynch: true // defaults to true
-        );
-
-    if (recognitions == null) {
-      devtools.log("recognitions is Null");
-      return;
-    }
-    devtools.log(recognitions.toString());
-    setState(() {
-      confidence = (recognitions[0]['confidence'] * 100);
-      label = recognitions[0]['label'].toString();
-    });
-  }
-
-  pickImageCamera() async {
-    final ImagePicker picker = ImagePicker();
-// Pick an image.
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-    if (image == null) return;
-
-    var imageMap = File(image.path);
-
-    setState(() {
-      filePath = imageMap;
-    });
-
-    var recognitions = await Tflite.runModelOnImage(
-        path: image.path, // required
-        imageMean: 0.0, // defaults to 117.0
-        imageStd: 255.0, // defaults to 1.0
-        numResults: 4, // defaults to 5
-        threshold: 0.2, // defaults to 0.1
-        asynch: true // defaults to true
-        );
-
-    if (recognitions == null) {
-      devtools.log("recognitions is Null");
-      return;
-    }
-    devtools.log(recognitions.toString());
-    setState(() {
-      confidence = (recognitions[0]['confidence'] * 100);
-      label = recognitions[0]['label'].toString();
-    });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    Tflite.close();
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _tfLteInit();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +45,7 @@ class _AlzhimerDetectionPageState extends State<AlzhimerDetectionPage> {
             children: [
               filePath != null
                   ? GestureDetector(
-                      onTap: pickImageGallery,
+                      onTap: (){},
                       child: SizedBox(
                           width: double.infinity,
                           //    height: ResponsiveHeight(context: context).scale(30),
@@ -150,7 +60,7 @@ class _AlzhimerDetectionPageState extends State<AlzhimerDetectionPage> {
                           )),
                     )
                   : GestureDetector(
-                      onTap: () => pickImageGallery(),
+                      onTap: () {},
                       child: DottedBorder(
                           dashPattern: const [10, 4],
                           radius: const Radius.circular(10),
@@ -180,6 +90,15 @@ class _AlzhimerDetectionPageState extends State<AlzhimerDetectionPage> {
                             ),
                           )),
                     ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Mild Demented',
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
               const SizedBox(
                 height: 40,
               ),

@@ -21,3 +21,8 @@ final class AuthFailure extends AuthState {
 
   AuthFailure(this.message);
 }
+
+final class AuthSent extends AuthState {
+
+  final String message = 'Email Sent Sucessfully';
+}

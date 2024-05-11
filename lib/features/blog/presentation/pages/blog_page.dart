@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fyp/core/common/widgets/loader.dart';
 import 'package:fyp/core/utils/show_snackbar.dart';
-import 'package:fyp/features/DiseasePrediction/mlmodel.dart';
+import 'package:fyp/features/DiseasePrediction/presentation/pages/mlmodel.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';

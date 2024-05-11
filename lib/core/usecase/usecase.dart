@@ -10,3 +10,7 @@ abstract interface class usecase2<SucessType,Params>{
   Future<Either<Failure,void>> call(void vd);
   
 }
+
+abstract interface class usecase3<SucessType,Params>{
+  Future<Either<Failure,void>> call(Params vd);
+}

@@ -70,4 +70,15 @@ class AuthRepositoryiterface implements AuthRepository {
       return left(Failure(e.message));
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> resetPasswordForEmail({required String email})async {
+   try {
+      final user = await remoteDataSource.forgotPasswordUser(email: email);
+
+      return right(user);
+    } on ServerException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
 }
