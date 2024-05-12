@@ -1,5 +1,10 @@
 import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:fyp/core/secrets/app_secrets.dart';
+import 'package:fyp/features/DiseasePrediction/data/datasource/ml_datasource.dart';
+import 'package:fyp/features/DiseasePrediction/data/repositories/ML_repository_impl.dart';
+import 'package:fyp/features/DiseasePrediction/domain/repositories/ML_repository.dart';
+import 'package:fyp/features/DiseasePrediction/domain/usecase/Ml_predict_usecase.dart';
+import 'package:fyp/features/DiseasePrediction/presentation/bloc/ml_bloc.dart';
 import 'package:fyp/features/auth/data/datasources/auth_remote_data_sources.dart';
 import 'package:fyp/features/auth/data/repositories/auth_repository_implementation.dart';
 import 'package:fyp/features/auth/domain/repository/auth_repository.dart';
@@ -26,12 +31,21 @@ Future<void> initdependencies() async {
   _initAuth();
   _initBlog();
   _initUser();
+  _initMl();
   final supabase = await Supabase.initialize(
       url: AppSecrets.url, anonKey: AppSecrets.anonKey);
 
   servicelocator.registerLazySingleton(() => supabase.client);
 
   servicelocator.registerLazySingleton(() => AppUserCubit());
+}
+
+void _initMl() {
+  servicelocator
+    ..registerFactory<MlRemoteDataSource>(() => MlRemoteDataSourceImpl())
+    ..registerFactory<MLRepository>(() => MlRepositoryImpl(servicelocator()))
+    ..registerFactory(() => GetPrediction(servicelocator()))
+    ..registerLazySingleton(() => MlBloc(getPrediction: servicelocator()));
 }
 
 void _initUser() {

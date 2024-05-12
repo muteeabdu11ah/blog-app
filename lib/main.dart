@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fyp/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:fyp/features/DiseasePrediction/presentation/bloc/ml_bloc.dart';
 import 'package:fyp/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:fyp/features/auth/presentation/pages/signin_page.dart';
 import 'package:fyp/features/blog/presentation/bloc/blog_bloc.dart';
@@ -25,6 +26,9 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => servicelocator<UserBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => servicelocator<MlBloc>(),
       ),
     ],
     child: MainApp(),
